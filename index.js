@@ -5,6 +5,7 @@ var compile = require('jade').compile;
 var compileClient = require('jade').compileClient;
 var ext = require('gulp-util').replaceExtension;
 var PluginError = require('gulp-util').PluginError;
+var warnSave = console.warn;
 
 function handleCompile(contents, opts){
   if(opts.client){
@@ -25,6 +26,7 @@ module.exports = function(options){
   var opts = options || {};
 
   function CompileJade(file, enc, cb){
+    console.warn = function() { return; }; // This is just wrong...
     opts.filename = file.path;
 
     if (file.data) {
@@ -41,9 +43,11 @@ module.exports = function(options){
       try {
         file.contents = new Buffer(handleCompile(String(file.contents), opts));
       } catch(e) {
+        console.warn = warnSave;
         return cb(new PluginError('gulp-jade', e));
       }
     }
+    console.warn = warnSave;
     cb(null, file);
   }
 

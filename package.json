@@ -1,7 +1,16 @@
 {
   "name": "gulp-jade",
   "version": "5.0.1",
-  "description": "Compile Jade templates",
+  "description": "Gulp plugin for compiling Pug templates",
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true
+  },
   "keywords": [
     "jade",
     "pug",
